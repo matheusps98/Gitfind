@@ -14,3 +14,23 @@ p{
 }
 
 }
+
+.btn{
+    background-color: #539BF5;
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 20px 0 !important;
+    text-decoration: none;
+    width: 120px;
+    display: flex;
+}
+
+.btn:hover {
+        background-color: #0e408f;
+        transform: scale(1.05);
+    }

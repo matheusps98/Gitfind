@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Header } from '../../components/Header';
 import background from "../../assets/background.png";
-import profile from "../../assets/profile.jpg";
 import ItemList from '../../components/ItemList';
 
 
@@ -18,8 +17,8 @@ function App() {
     const newUser = await userData.json();
     
     if(newUser.name){
-      const {avatar_url, name, bio, login} = newUser;
-      setCurrentUser({avatar_url, name, bio, login});
+      const {avatar_url, name, bio, login, html_url, blog} = newUser;
+      setCurrentUser({avatar_url, name, bio, login, html_url, blog});
 
 
       const reposData = await fetch(`https://api.github.com/users/${user}/repos`);
@@ -38,7 +37,12 @@ function App() {
             <img src={background} alt="Background app" className='background' />
         <div className='info'>
           <div>
-            <input name='user' 
+            <input name='user'
+             onKeyDown={(event) => {
+              if (event.key === 'Enter' && user.trim() !== '') {
+                handleGetData();
+              }
+            }}
             value={user} 
             onChange={event => setUser(event.target.value)} 
             placeholder='@username'/>
@@ -50,8 +54,9 @@ function App() {
             <div className='perfil'>
               <img src={currentUser.avatar_url} alt="Avatar" className='profile' />
               <div>
-                <h3>{currentUser.name}</h3>
+                <a className='perfil-link' href={currentUser.html_url} target='_blank'><h3>{currentUser.name}</h3></a>
                 <span>@{currentUser.login}</span>
+    
                 <p>{currentUser.bio}</p>
               </div>
             </div>
@@ -67,7 +72,8 @@ function App() {
             <ItemList 
               key={repo.id}
               title={repo.name} 
-              description={repo.description}/>
+              description={repo.description}
+              html_url={repo.html_url}/>
             ))}
 
           </div>
